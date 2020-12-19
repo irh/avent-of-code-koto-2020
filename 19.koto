@@ -1,0 +1,115 @@
+# https://adventofcode.com/2020/day/19
+
+import io, koto, string.print, test.assert_eq, test.assert
+
+parse_input = |input|
+  rules = {}
+  lines = input.lines()
+  for line in lines
+    if line.is_empty() then break
+    id, rest = line.split(":").to_tuple()
+    id = id.to_number()
+    rest = rest.trim()
+    first_char = rest.chars().next()
+    match first_char
+      "\"" then
+        pattern = rest.slice 1 (rest.size() - 1)
+        rules.insert id {pattern}
+      else
+        links = []
+        sequence = []
+        for token in rest.split(" ")
+          match token
+            "|" then
+              links.push sequence.copy()
+              sequence.clear()
+            else
+              sequence.push token.to_number()
+        links.push sequence
+        rules.insert id {links}
+
+  messages = lines.to_tuple()
+  rules, messages
+
+
+
+message_is_valid = |message, rules|
+  chars = message.chars().to_tuple()
+  check_rule = |rule, index|
+    # returns true if the rule matched, plus the number of chars consumed
+    # debug rule
+    # debug index
+    match rule.get "links"
+      () then
+        match rule.get "pattern"
+          pattern
+            if chars.get(index) == pattern
+              return true, 1
+            else
+              return false, 0
+      links then
+        for sequence in links
+          # debug sequence
+          consumed = 0
+          sequence_matched = true
+          for sequence_index, rule_id in sequence.enumerate()
+            # debug sequence_index, rule_id
+            linked_rule = rules.get rule_id
+            link_matched, link_consumed = check_rule linked_rule (index + consumed)
+            if link_matched
+              # print "matched!"
+              consumed += link_consumed
+              if index + consumed > chars.size()
+                print "overran end"
+                sequence_matched = false
+                break
+            else
+              # print "no match"
+              sequence_matched = false
+              continue
+          # debug sequence_index, sequence.size()
+          sequence_completed = sequence_index == sequence.size() - 1
+          # debug sequence_matched, sequence_completed
+          if sequence_matched and sequence_completed
+            # debug consumed
+            return true, consumed
+          # else
+            # print "no match: {}" rule
+            # return false, 0
+    # No match was found
+    false, 0
+  matched, consumed = check_rule rules.get(0) 0
+  matched and consumed == chars.size()
+
+update_rules = |rules|
+  rules.insert 8 {links: [[42], [42, 8]]}
+  rules.insert 11 {links: [[42, 31], [42, 11, 31]]}
+
+valid_message_count = |rules, messages|
+  messages
+    .keep |message| message_is_valid message rules
+    .each |message| print "valid: {}" message
+    .count()
+
+export main = ||
+  rules, messages = parse_input (io.read_to_string koto.script_dir + "./input/19")
+  print "Part one: {}" (valid_message_count rules messages) # 279
+  # print "Part two: {}" part_two # 328920644404583
+
+
+export tests =
+  test_part_one: |self|
+    rules, messages =
+      parse_input (io.read_to_string koto.script_dir + "./input/19-example-1")
+    assert (message_is_valid "ababbb" rules)
+    assert_eq (valid_message_count rules messages) 2
+
+  test_part_two: |self|
+    rules, messages =
+      parse_input (io.read_to_string koto.script_dir + "./input/19-example-2")
+    assert_eq (valid_message_count rules messages) 3
+    update_rules rules
+    assert (message_is_valid "bbabbbbaabaabba" rules)
+    assert (message_is_valid "bbabbbbaabaabba" rules)
+    assert not (message_is_valid "aaaabbaaaabbaaa" rules)
+    # assert_eq (valid_message_count rules messages) 12
