@@ -44,41 +44,45 @@ message_is_valid = |message, rules|
         match rule.get "pattern"
           pattern
             if chars.get(index) == pattern
+              print "pattern matched: {}" pattern
               return true, 1
             else
               return false, 0
       links then
         for sequence in links
-          # debug sequence
+          debug sequence
           consumed = 0
-          sequence_matched = true
-          for sequence_index, rule_id in sequence.enumerate()
-            # debug sequence_index, rule_id
+          match_count = 0
+          for rule_id in sequence
+            debug rule_id
             linked_rule = rules.get rule_id
-            link_matched, link_consumed = check_rule linked_rule (index + consumed)
+            link_index = index + consumed
+            if link_index >= chars.size()
+              break
+            print "Checking: {} - index: {}" linked_rule link_index
+            link_matched, link_consumed =
+              check_rule linked_rule link_index
+            debug link_matched, link_consumed
+            consumed += link_consumed
             if link_matched
-              # print "matched!"
-              consumed += link_consumed
-              if index + consumed > chars.size()
-                print "overran end"
-                sequence_matched = false
-                break
+              match_count += 1
             else
-              # print "no match"
-              sequence_matched = false
-              continue
-          # debug sequence_index, sequence.size()
-          sequence_completed = sequence_index == sequence.size() - 1
-          # debug sequence_matched, sequence_completed
-          if sequence_matched and sequence_completed
-            # debug consumed
+              break
+          if match_count == sequence.size()
+            overran_end = (index + consumed) > chars.size()
+            debug consumed
+            debug index, consumed
             return true, consumed
-          # else
-            # print "no match: {}" rule
-            # return false, 0
+          else if index + consumed == chars.size()
+            print "Reached the end of the input for {}" sequence
+            return true, consumed
+          else
+            print "Not looking good for {} - match_count: {}" sequence match_count
     # No match was found
+    print "no match found for {} - index: {}" rule index
     false, 0
   matched, consumed = check_rule rules.get(0) 0
+  debug matched, consumed
   matched and consumed == chars.size()
 
 update_rules = |rules|
@@ -110,6 +114,10 @@ export tests =
     assert_eq (valid_message_count rules messages) 3
     update_rules rules
     assert (message_is_valid "bbabbbbaabaabba" rules)
-    assert (message_is_valid "bbabbbbaabaabba" rules)
+    assert (message_is_valid "ababaaaaaabaaab" rules)
+    assert (message_is_valid "ababaaaaabbbaba" rules)
+    assert (message_is_valid "aaaaabbaabaaaaababaa" rules)
+    assert (message_is_valid "babbbbaabbbbbabbbbbbaabaaabaaa" rules)
+    assert (message_is_valid "aaabbbbbbaaaabaababaabababbabaaabbababababaaa" rules)
     assert not (message_is_valid "aaaabbaaaabbaaa" rules)
-    # assert_eq (valid_message_count rules messages) 12
+    assert_eq (valid_message_count rules messages) 12
