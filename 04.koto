@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/4
 
-import io, koto, string.print
+import io.print
 from test import assert, assert_eq
 
 expected_fields = "byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"
@@ -78,8 +78,8 @@ export main = ||
   print "Part two: {}", part_two # 111
 
 
-export tests =
-  pre_test: |self|
+export @tests =
+  @pre_test: |self|
     self.passports = parse_passports "\
 ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
 byr:1937 iyr:2017 cid:147 hgt:183cm
@@ -96,20 +96,20 @@ hcl:#cfa07d eyr:2025 pid:166559648
 iyr:2011 ecl:brn hgt:59in
 "
 
-  test_parse_passports: |self|
+  @test parse_passports: |self|
     assert_eq self.passports.size(), 4
     assert_eq self.passports[0].ecl, "gry"
     assert_eq self.passports[1].byr, "1929"
     assert_eq self.passports[2].hgt, "179cm"
     assert_eq self.passports[3].eyr, "2025"
 
-  test_part_one: |self|
+  @test part_one: |self|
     assert passport_is_valid_part_one self.passports[0]
     assert not passport_is_valid_part_one self.passports[1]
     assert passport_is_valid_part_one self.passports[2]
     assert not passport_is_valid_part_one self.passports[3]
 
-  test_part_two_valid: |self|
+  @test part_two_valid: |self|
     passports = parse_passports "\
 pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980
 hcl:#623a2f
@@ -129,7 +129,7 @@ iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719
         debug passport
         assert false
 
-  test_part_two_invalid: |self|
+  @test part_two_invalid: |self|
     passports = parse_passports "\
 eyr:1972 cid:100
 hcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926

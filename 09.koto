@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/9
 
-import io, koto, list, string.print
+import io.print
 from test import assert, assert_eq
 
 ring_buffer = |capacity|
@@ -60,8 +60,8 @@ export main = ||
   print "Part one: {}", (find_first_invalid_input input, 25) # 1930745883
   print "Part two: {}", (find_encryption_weakness input, 25) # 268878261
 
-export tests =
-  pre_test: |self|
+export @tests =
+  @pre_test: |self|
     self.input = parse_input "\
 35
 20
@@ -85,7 +85,7 @@ export tests =
 576
 "
 
-  test_part_one_example_one: ||
+  @test part_one_example_one: ||
     buffer = ring_buffer 25
     # preamble, #s 1-25, with 20 in first position
     buffer.push 20
@@ -105,9 +105,9 @@ export tests =
     assert input_is_valid buffer, 64
     assert input_is_valid buffer, 66
 
-  test_part_one_example_two: |self|
+  @test part_one_example_two: |self|
     assert_eq (find_first_invalid_input self.input, 5), 127
 
-  test_part_two: |self|
+  @test part_two: |self|
     assert_eq (find_encryption_weakness self.input, 5), 62
 

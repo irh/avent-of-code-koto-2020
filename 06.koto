@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/6
 
-import io, koto, string.print, test.assert_eq
+import io.print, test.assert_eq
 
 count_answers_part_one = |answers|
   result = 0
@@ -42,8 +42,8 @@ export main = ||
   print "Part one: {}", (count_answers_part_one input) # 6903
   print "Part two: {}", (count_answers_part_two input) # 3493
 
-export tests =
-  pre_test: |self|
+export @tests =
+  @pre_test: |self|
     self.input = "\
 abc
 
@@ -61,8 +61,8 @@ a
 
 b"
 
-  test_part_one: |self|
+  @test part_one: |self|
     assert_eq (count_answers_part_one self.input), 11
 
-  test_part_two: |self|
+  @test part_two: |self|
     assert_eq (count_answers_part_two self.input), 6

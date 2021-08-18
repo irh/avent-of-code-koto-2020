@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/14
 
-import io, koto, list, string.print, test.assert_eq
+import io.print, test.assert_eq
 
 play_game = |start_numbers, turn_count|
   last_number = ()
@@ -39,10 +39,10 @@ export main = ||
   print "Part one: {}", (play_game start_numbers, 2020) # 447
   print "Part two: {}", (play_game start_numbers, 30000000) # 11721679
 
-export tests =
-  test_part_one: ||
+export @tests =
+  @test part_one: ||
     assert_eq (play_game (0, 3, 6), 2020), 436
 
   # This takes a while to run (~30s)
-  # test_part_two: ||
+  # @test part_two: ||
   #   assert_eq (play_game (0, 3, 6), 30000000), 175594

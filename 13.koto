@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/13
 
-import io, koto, string.print, test.assert_eq
+import io.print, test.assert_eq
 
 parse_bus_notes = |input|
   lines = input.lines()
@@ -60,8 +60,8 @@ export main = ||
   print "Part one: {}", (bus * wait_time) # 2935
   print "Part two: {}", (find_contest_time bus_ids) # 836024966345345
 
-export tests =
-  pre_test: |self|
+export @tests =
+  @pre_test: |self|
     bus_notes = parse_bus_notes "\
 939
 7,13,x,x,59,x,31,19
@@ -69,12 +69,12 @@ export tests =
     self.start_time = bus_notes[0]
     self.bus_ids = bus_notes[1]
 
-  test_part_one: |self|
+  @test part_one: |self|
     bus, wait_time = (wait_time_for_next_bus self.bus_ids, self.start_time)
     assert_eq bus, 59
     assert_eq wait_time, 5
 
-  test_part_two: |self|
+  @test part_two: |self|
     assert_eq (find_contest_time self.bus_ids), 1068781
 
     _, bus_ids = parse_bus_notes "\

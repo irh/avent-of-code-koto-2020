@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/2
 
-import io, koto, string.print, test.assert_eq
+import io.print, test.assert_eq
 
 
 parse_password = |line|
@@ -59,23 +59,23 @@ export main = ||
   print "Part two: {}", (count_valid_passwords_part_two input) # 699
 
 
-export tests =
-  pre_test: |self|
+export @tests =
+  @pre_test: |self|
     self.input = parse_input "\
 1-3 a: abcde
 1-3 b: cdefg
 2-9 c: ccccccccc
 "
 
-  test_parse_password: ||
+  @test parse_password: ||
     policy, password = parse_password "1-3 a: abcde"
     assert_eq policy.required_letter, "a"
     assert_eq policy.required_min, 1
     assert_eq policy.required_max, 3
     assert_eq password, "abcde"
 
-  test_part_one: |self|
+  @test part_one: |self|
     assert_eq (count_valid_passwords_part_one self.input), 2
 
-  test_part_two: |self|
+  @test part_two: |self|
     assert_eq (count_valid_passwords_part_two self.input), 1

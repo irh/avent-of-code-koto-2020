@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/14
 
-import enum.make_enum, io, koto, string.print, test.assert_eq
+import enum.make_enum, io.print, test.assert_eq
 
 commands = make_enum "mask", "mem"
 
@@ -103,8 +103,8 @@ export main = ||
   print "Part one: {}", run_program program, 1 # 4297467072083
   print "Part two: {}", run_program program, 2 # 5030603328768
 
-export tests =
-  test_part_one: ||
+export @tests =
+  @test part_one: ||
     program = parse_program "\
 mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X
 mem[8] = 11
@@ -113,7 +113,7 @@ mem[8] = 0
 "
     assert_eq (run_program program, 1), 165
 
-  test_part_two: ||
+  @test part_two: ||
     program = parse_program "\
 mask = 000000000000000000000000000000X1001X
 mem[42] = 100

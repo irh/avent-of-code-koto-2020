@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/11
 
-import enum.make_enum, io, koto, list, os, string.print, test.assert_eq, thread
+import enum.make_enum, io.print, test.assert_eq
 
 cell = make_enum "floor", "empty", "occupied"
 
@@ -163,8 +163,8 @@ export main = ||
   print "- seats stabilised in {} steps", part_two.fill_seats_until_stable_part_two()
   print "- occupied seats: {}", part_two.occupied_seats_count() # 2039
 
-export tests =
-  pre_test: |self|
+export @tests =
+  @pre_test: |self|
     self.grid = make_floor_grid "\
 L.LL.LL.LL
 LLLLLLL.LL
@@ -178,10 +178,10 @@ L.LLLLLL.L
 L.LLLLL.LL
 "
 
-  test_part_one: |self|
+  @test part_one: |self|
     assert_eq self.grid.fill_seats_until_stable_part_one(), 5
     assert_eq self.grid.occupied_seats_count(), 37
 
-  test_part_two: |self|
+  @test part_two: |self|
     assert_eq self.grid.fill_seats_until_stable_part_two(), 6
     assert_eq self.grid.occupied_seats_count(), 26

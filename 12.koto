@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/12
 
-import io, koto, string.print, test.assert_eq
+import io.print, test.assert_eq
 
 north = num2 0, 1
 south = num2 0, -1
@@ -52,8 +52,8 @@ export main = ||
   print "Part one: {}", (run_instructions_part_one instructions) # 319
   print "Part two: {}", (run_instructions_part_two instructions) # 50157
 
-export tests =
-  pre_test: |self|
+export @tests =
+  @pre_test: |self|
     self.instructions = parse_instructions "\
 F10
 N3
@@ -62,8 +62,8 @@ R90
 F11
 "
 
-  test_part_one: |self|
+  @test part_one: |self|
     assert_eq (run_instructions_part_one self.instructions), 25
 
-  test_part_two: |self|
+  @test part_two: |self|
     assert_eq (run_instructions_part_two self.instructions), 286

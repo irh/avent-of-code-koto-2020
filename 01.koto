@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/1
 
-import io, koto, string.print, test.assert_eq
+import io.print, test.assert_eq
 
 
 parse_expenses = |input|
@@ -41,8 +41,8 @@ export main = ||
   print "Part two: {}", part_two # 236430480
 
 
-export tests =
-  pre_test: |self|
+export @tests =
+  @pre_test: |self|
     self.input = "\
 1721
 979
@@ -51,12 +51,12 @@ export tests =
 675
 1456"
 
-  test_part_one: |self|
+  @test part_one: |self|
     expenses = parse_expenses self.input
     result = product_of_two_expenses_that_sum_to_2020 expenses
     assert_eq result, 514579
 
-  test_part_two: |self|
+  @test part_two: |self|
     expenses = parse_expenses self.input
     result = product_of_three_expenses_that_sum_to_2020 expenses
     assert_eq result, 241861950

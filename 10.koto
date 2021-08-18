@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/10
 
-import io, koto, string.print, test.assert_eq
+import io.print, test.assert_eq
 
 parse_input = |input|
   input
@@ -43,14 +43,14 @@ export main = ||
   print "Part one: {}", (differences[1] * differences[3]) # 2040
   print "Part two: {}", (count_arrangements adapters) # 28346956187648
 
-export tests =
-  pre_test: |self|
+export @tests =
+  @pre_test: |self|
     self.adapters_1 =
       parse_input io.read_to_string koto.script_dir + "./input/10-example-1"
     self.adapters_2 =
       parse_input io.read_to_string koto.script_dir + "./input/10-example-2"
 
-  test_part_one: |self|
+  @test part_one: |self|
     differences = joltage_differences self.adapters_1
     assert_eq differences[1], 7
     assert_eq differences[3], 5
@@ -59,6 +59,6 @@ export tests =
     assert_eq differences[1], 22
     assert_eq differences[3], 10
 
-  test_part_two: |self|
+  @test part_two: |self|
     assert_eq (count_arrangements self.adapters_1), 8
     assert_eq (count_arrangements self.adapters_2), 19208

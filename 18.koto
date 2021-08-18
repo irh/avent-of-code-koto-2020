@@ -84,13 +84,13 @@ export main = ||
   print "Part two: {}", part_two # 328920644404583
 
 
-export tests =
-  test_part_one: |self|
+export @tests =
+  @test part_one: |self|
     assert_eq (evaluate_1 "1 + 2 * 3 + 4 * 5 + 6"), 71
     assert_eq (evaluate_1 "1 + (2 * 3) + (4 * (5 + 6))"), 51
     assert_eq (evaluate_1 "((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2"), 13632
 
-  test_part_two: |self|
+  @test part_two: |self|
     assert_eq (evaluate_2 "1 + 2 * 3 + 4 * 5 + 6"), 231
     assert_eq (evaluate_2 "1 + (2 * 3) + (4 * (5 + 6))"), 51
     assert_eq (evaluate_2 "((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2"), 23340

@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/3
 
-import io, koto, string.print
+import io.print
 from test import assert, assert_eq
 
 
@@ -39,8 +39,8 @@ export main = ||
   print "Part two: {}", (check_slopes_and_multiply_tree_counts input) # 1592662500
 
 
-export tests =
-  pre_test: |self|
+export @tests =
+  @pre_test: |self|
     self.input = parse_input "\
 ..##.......
 #...#...#..
@@ -55,14 +55,14 @@ export tests =
 .#..#...#.#
 "
 
-  test_parse_input: |self|
+  @test parse_input: |self|
     assert self.input[0][2]
     assert self.input[1][4]
     assert not self.input[0][1]
     assert not self.input[4][2]
 
-  test_part_one: |self|
+  @test part_one: |self|
     assert_eq (count_trees_on_grid self.input, (3, 1)), 7
 
-  test_part_two: |self|
+  @test part_two: |self|
     assert_eq (check_slopes_and_multiply_tree_counts self.input), 336

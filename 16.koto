@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/16
 
-import io, koto, string.print
+import io.print
 from test import assert, assert_eq
 
 parse_notes = |input|
@@ -107,13 +107,13 @@ export main = ||
   print "Part two: {}", (analyze_ticket your_ticket, fields) # 1515506256421
 
 
-export tests =
-  test_part_one: ||
+export @tests =
+  @test part_one: ||
     fields, your_ticket, nearby_tickets =
       parse_notes io.read_to_string koto.script_dir + "./input/16-example-1"
     assert_eq (scanning_error_rate fields, nearby_tickets), 71
 
-  test_part_two: ||
+  @test part_two: ||
     fields, your_ticket, nearby_tickets =
       parse_notes io.read_to_string koto.script_dir + "./input/16-example-2"
     assign_field_ids fields, nearby_tickets

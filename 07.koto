@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/7
 
-import io, koto, string.print, test.assert_eq
+import io.print, test.assert_eq
 
 parse_bag_rules = |input|
   input
@@ -46,8 +46,8 @@ export main = ||
   print "Part one: {}", (count_bag_options "shiny gold", rules) # 272
   print "Part two: {}", (count_contained_bags "shiny gold", rules) # 172246
 
-export tests =
-  pre_test: |self|
+export @tests =
+  @pre_test: |self|
     self.example_1 = "\
 light red bags contain 1 bright white bag, 2 muted yellow bags.
 dark orange bags contain 3 bright white bags, 4 muted yellow bags.
@@ -60,15 +60,15 @@ faded blue bags contain no other bags.
 dotted black bags contain no other bags.
 "
 
-  test_part_one: |self|
+  @test part_one: |self|
     rules = parse_bag_rules self.example_1
     assert_eq (count_bag_options "shiny gold", rules), 4
 
-  test_part_two_example_1: |self|
+  @test part_two_example_1: |self|
     rules = parse_bag_rules self.example_1
     assert_eq (count_contained_bags "shiny gold", rules), 32
 
-  test_part_two_example_2: |self|
+  @test part_two_example_2: |self|
     rules = parse_bag_rules "\
 shiny gold bags contain 2 dark red bags.
 dark red bags contain 2 dark orange bags.

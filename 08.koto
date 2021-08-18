@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/8
 
-import enum.make_enum, io, koto, list, string.print
+import enum.make_enum, io.print
 from test import assert, assert_eq
 
 ops = make_enum "nop", "acc", "jmp"
@@ -49,8 +49,8 @@ export main = ||
   print "Part one: {}", (run_program program)[0] # 1915
   print "Part two: {}", (fix_program_and_get_result program) # 944
 
-export tests =
-  pre_test: |self|
+export @tests =
+  @pre_test: |self|
     self.program = parse_program "\
 nop +0
 acc +1
@@ -63,7 +63,7 @@ jmp -4
 acc +6
 "
 
-  test_parse_program: |self|
+  @test parse_program: |self|
     assert_eq self.program.size(), 9
     assert_eq self.program[0][0], ops.nop
     assert_eq self.program[0][1], 0
@@ -72,11 +72,11 @@ acc +6
     assert_eq self.program[5][0], ops.acc
     assert_eq self.program[5][1], -99
 
-  test_part_one: |self|
+  @test part_one: |self|
     result, terminated = run_program self.program
     assert_eq result, 5
     assert not terminated
 
-  test_part_two: |self|
+  @test part_two: |self|
     result = fix_program_and_get_result self.program
     assert_eq result, 8

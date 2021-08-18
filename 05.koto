@@ -1,6 +1,6 @@
 # https://adventofcode.com/2020/day/5
 
-import io, koto, string.print, test.assert_eq
+import io.print, test.assert_eq
 
 lower_half = |r| r.start()..r.start() + r.size() / 2
 upper_half = |r| r.start() + r.size() / 2..r.end()
@@ -34,8 +34,8 @@ export main = ||
   print "Part one: {}", seat_ids.last() # 976
   print "Part two: {}", find_missing_seat seat_ids # 685
 
-export tests =
-  test_part_one: ||
+export @tests =
+  @test part_one: ||
     assert_eq (seat_id "FBFBBFFRLR"), 357
     assert_eq (seat_id "BFFFBBFRRR"), 567
     assert_eq (seat_id "FFFBBBFRRR"), 119
