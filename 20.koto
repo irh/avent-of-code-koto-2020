@@ -1,0 +1,48 @@
+# https://adventofcode.com/2020/day/20
+
+import io.print
+from test import assert, assert_eq
+
+make_tile = |tile_id, grid|
+  tile_id: tile_id
+  grid: grid
+
+parse_input = |input|
+  tiles = []
+  lines = input.lines()
+
+  loop
+    line = lines.next()
+
+    # Tile xxxx:
+    tile_id = line[5..9].to_number()
+
+    # 10 rows like: .#..####.#
+    grid = lines
+      .take 10
+      .each |line|
+        line
+          .chars()
+          .each |c| if c == '#' then 1 else 0
+          .to_tuple()
+      .to_tuple()
+
+    tiles.push make_tile tile_id, grid
+
+    match lines.next()
+      () then break
+      "" then continue
+      other then throw "Expected empty line, got '{}'".format other
+
+  tiles
+
+
+export main = ||
+  # tiles = parse_input io.read_to_string koto.script_dir + "./input/20"
+  true
+
+
+export @tests =
+  @test part_one: |self|
+    tiles = parse_input io.read_to_string koto.script_dir + "./input/20-example"
+    assert_eq tiles.size(), 9
